@@ -12,15 +12,7 @@ for (var i = 0; i < 9; i++) {
 		} else if (j == 2 || j == 5) {
 			document.getElementById(currentGrid).style = "border-right-width: 2px;";
 		}
-		// if ((i == 3 || i == 6) && (j == 3 || j == 6)) {
-		// 	grid.innerHTML += '<div id="grid' + i + j + '" class="grid-item" style="border-right-width: 2px; border-bottom-width: 2px"</div>';
-		// } else if (i == 3 || i == 6) {
-		// 	grid.innerHTML += '<div id="grid' + i + j + '" class="grid-item" style="border-bottom-width: 2px"</div>';
-		// } else if (j == 3 || j == 6) {
-		// 	grid.innerHTML += '<div id="grid' + i + j + '" class="grid-item" style="border-right-width: 2px"</div>';
-		// } else {
-		// 	grid.innerHTML += '<div id="grid' + i + j + '" class="grid-item"></div>';
-		// }
+		
 	}
 }
 

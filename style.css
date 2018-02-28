@@ -2,20 +2,6 @@ body {
 	font-family: Montserrat;
 }
 
-/*.grid {
-	display: grid;
-	grid-template-columns: max-content max-content max-content;
-	border: 2px solid black;
-	width: max-content;
-}
-
-.small-grid {
-	display: grid;
-	grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-	grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-	border: 2px solid black;
-}*/
-
 #grid {
 	display: grid;
 	grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
@@ -23,20 +9,6 @@ body {
 	border: 2px solid black;
 	width: max-content;
 }
-
-/*#sg2, #sg8 {
-	border-left: none;
-	border-right: none;
-}
-
-#sg4, #sg6 {
-	border-top: none;
-	border-bottom: none;
-}
-
-#sg5 {
-	border: none;
-}*/
 
 .grid-item {
 	border: 0.5px solid black;
