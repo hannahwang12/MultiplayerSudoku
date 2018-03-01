@@ -1,5 +1,6 @@
 body {
 	font-family: Montserrat;
+
 }
 
 #grid {
@@ -8,6 +9,10 @@ body {
 	grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
 	border: 2px solid black;
 	width: max-content;
+	position: absolute;
+	left: 50%;
+	top: 100px;
+	transform: translate(-50%, 0);
 }
 
 .grid-item {
