@@ -65,3 +65,27 @@ button:hover {
 	cursor: pointer;
 	font-weight: bold;
 }
+
+@media (max-width: 600px) {
+	#grid {
+		grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+		grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+	}
+}
+
+@media (max-width: 450px) {
+	h1 {
+		letter-spacing: 20px;
+		margin-right: -20px;
+		font-size: 40px;
+	}
+
+	#grid {
+		grid-template-columns: 35px 35px 35px 35px 35px 35px 35px 35px 35px;
+		grid-template-rows: 35px 35px 35px 35px 35px 35px 35px 35px 35px;
+	}
+
+	.grid-item {
+		font-size: 14px;
+	}
+}
