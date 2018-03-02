@@ -42,13 +42,31 @@ input {
 	font-size: 18px;
 }
 
-@keyframes colourChange {
+@keyframes green {
 	from {background-color: rgba(0, 200, 0, 0.3);}
 	to {background-color: transparent;}
 }
 
-.animation {
-	animation: colourChange 2s;
+.green {
+	animation: green 2s;
+}
+
+@keyframes red {
+	from {background-color: rgba(200, 0, 0, 0.3);}
+	to {background-color: transparent;}
+}
+
+.red {
+	animation: red 2s;
+}
+
+@keyframes grey {
+	from {background-color: rgba(0, 0, 0, 0.3);}
+	to {background-color: transparent;}
+}
+
+.grey {
+	animation: grey 2s;
 }
 
 button {
@@ -71,6 +89,11 @@ button:hover {
 		grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px;
 		grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px;
 	}
+
+	input {
+		width: 40px;
+		height: 40px;
+	}
 }
 
 @media (max-width: 450px) {
@@ -87,5 +110,16 @@ button:hover {
 
 	.grid-item {
 		font-size: 14px;
+	}
+
+	input {
+		width: 35px;
+		height: 35px;
+		font-size: 14px;
+	}
+
+	button {
+		margin-left: 3px;
+		margin-right: 3px;
 	}
 }

@@ -96,8 +96,12 @@ function switchNumbers(x, y) {
 	}
 }
 
+var puzzle = [[],[],[],[],[],[],[],[],[]];
+var guesses = [[],[],[],[],[],[],[],[],[]];
 
 function shuffleSolution() {
+	puzzle = [[],[],[],[],[],[],[],[],[]];
+	guesses = [[],[],[],[],[],[],[],[],[]];
 	do {
 		switchRows(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
 		console.log("r");
@@ -118,40 +122,49 @@ function shuffleSolution() {
 		switchNumbers(Math.ceil(Math.random() * 9), Math.ceil(Math.random() * 9));
 		console.log("sn");
 	} while (Math.floor(Math.random() * 4) != 0);
+	for (var i = 0; i < 9; i++) {
+		for (var j = 0; j < 9; j++) {
+			var currentGrid = "grid" + i + j;
+			var gridNode = document.getElementById(currentGrid);
+			if (gridNode.firstChild) {
+				gridNode.removeChild(gridNode.firstChild);
+			} else {
+				document.getElementById(currentGrid).innerHTML = "";
+			}
+			var random = (Math.random() * 10);
+			if (random < 3) {
+				document.getElementById(currentGrid).innerHTML = solution[i][j];
+				document.getElementById(currentGrid).style.fontWeight = "bold";
+			} else {
+				puzzle[i][j] = 0;
+				var guess = document.createElement("INPUT");
+				guess.setAttribute("id", "guess" + i + j);
+			//	guess.setAttribute("type", "number");
+				guess.setAttribute("maxlength", "1");
+			//	guess.setAttribute("onfocus", "this.value=''");
+				document.getElementById(currentGrid).appendChild(guess);
+			//	guesses[i][j] = parseInt(guess, 10);
+				console.log(guesses[i][j]);
+			}
+		}
+	}
 }
 
 shuffleSolution();
 
 
 
-// add numbers
-var puzzle = [[],[],[],[],[],[],[],[],[]];
-var guesses = [[],[],[],[],[],[],[],[],[]];
 
-for (var i = 0; i < 9; i++) {
-	for (var j = 0; j < 9; j++) {
-		var currentGrid = "grid" + i + j;
-		var random = (Math.random() * 10);
-		if (random < 3) {
-			document.getElementById(currentGrid).innerHTML = solution[i][j];
-			document.getElementById(currentGrid).style.fontWeight = "bold";
-		} else {
-			puzzle[i][j] = 0;
-			var guess = document.createElement("INPUT");
-			guess.setAttribute("id", "guess" + i + j);
-		//	guess.setAttribute("type", "number");
-			guess.setAttribute("maxlength", "1");
-			guess.setAttribute("onfocus", "this.value=''");
-			document.getElementById(currentGrid).appendChild(guess);
-		//	guesses[i][j] = parseInt(guess, 10);
-			console.log(guesses[i][j]);
-		}
-	}
-}
+
+
+// add numbers
+
+
+
 
 // functions for buttons
-var correct = [];
-var correctLength = 0;
+var checkGrid = [];
+var checkLength = 0;
 
 function check() {
 	correct = []
@@ -165,26 +178,40 @@ function check() {
 				if (g >= 1 && g <= 9) {
 					guesses[i][j] = g;
 					if (guesses[i][j] != solution[i][j]) {
-						document.getElementById(currentGrid).style.backgroundColor = "rgba(200, 0, 0, 0.3)"
+				//		document.getElementById(currentGrid).style.backgroundColor = "rgba(200, 0, 0, 0.3)"
+						checkGrid.push(currentGrid);	
+						document.getElementById(checkGrid[checkLength]).className += " red";
+						transparentRed(checkLength);
+						checkLength++;
 					} else if (guesses[i][j] == solution[i][j]) {
-						document.getElementById(currentGrid).style.backgroundColor = "transparent";
-						correct.push(currentGrid);	
-						document.getElementById(correct[correctLength]).className += " animation";
-						transparent(correctLength);
-						correctLength++;
-
-						function transparent(i) {setTimeout(function() {
-							document.getElementById(correct[i]).classList.remove("animation")
-						}, 300);}		
+						checkGrid.push(currentGrid);	
+						document.getElementById(checkGrid[checkLength]).className += " green";
+						transparentGreen(checkLength);
+						checkLength++;								
 					}
 				} else if (document.getElementById(currentGuess).value != "") {
-					document.getElementById(currentGrid).style.backgroundColor = "#aaa"
+				//	document.getElementById(currentGrid).style.backgroundColor = "#aaa"
+					checkGrid.push(currentGrid);	
+					document.getElementById(c[checkLength]).className += " grey";
+					transparentGrey(checkLength);
+					checkLength++;
 				}
 			}
 		}
 	}
 }
 
+function transparentGreen(i) {setTimeout(function() {
+	document.getElementById(checkGrid[i]).classList.remove("green");
+}, 300);}
+
+function transparentRed(i) {setTimeout(function() {
+	document.getElementById(checkGrid[i]).classList.remove("red");
+}, 300);}
+
+function transparentGrey(i) {setTimeout(function() {
+	document.getElementById(checkGrid[i]).classList.remove("grey");
+}, 300);}
 
 function clearGuesses() {
 	console.log("clear");
@@ -219,8 +246,6 @@ function showSolution() {
 		showingSolution = false;
 	}
 }
-
-
 
 
 function moveFocus(id) {
