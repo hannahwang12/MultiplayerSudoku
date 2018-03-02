@@ -1,6 +1,19 @@
 body {
 	font-family: Montserrat;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 
+}
+
+h1 {
+	letter-spacing: 25px;
+	margin-right: -25px;
+	font-size: 50px;
+	margin-top: -50px;
+	font-weight: lighter;
 }
 
 #grid {
@@ -9,10 +22,6 @@ body {
 	grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
 	border: 2px solid black;
 	width: max-content;
-	position: absolute;
-	left: 50%;
-	top: 100px;
-	transform: translate(-50%, 0);
 }
 
 .grid-item {
@@ -31,4 +40,28 @@ input {
 	text-align: center;
 	font-family: Montserrat;
 	font-size: 18px;
+}
+
+@keyframes colourChange {
+	from {background-color: rgba(0, 200, 0, 0.3);}
+	to {background-color: transparent;}
+}
+
+.animation {
+	animation: colourChange 2s;
+}
+
+button {
+	display: inline;
+	margin-top: 50px;
+	margin-left: 10px;
+	margin-right: 10px;
+	background: transparent;
+	border: none;
+	font-family: Montserrat;
+}
+
+button:hover {
+	cursor: pointer;
+	font-weight: bold;
 }

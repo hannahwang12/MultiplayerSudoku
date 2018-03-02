@@ -5,11 +5,16 @@
 	<title>Sudoku</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
+	<h1>SUDOKU</h1>
 	<div id="grid"></div>
-	<button onclick="check()">Check</button>
-	<button onclick="clearGuesses()">Clear</button>
+	<div class="buttons">
+		<button onclick="check()">Check</button>
+		<button onclick="clearGuesses()">Clear</button>
+		<button onclick="showSolution()">Show Solution</button>
+	</div>
 	<script type="text/javascript" src="script.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ var grid = document.getElementById("grid");
 for (var i = 0; i < 9; i++) {
 	for (var j = 0; j < 9; j++) {
 		var currentGrid	= "grid" + i + j;
-		grid.innerHTML += '<div id="' + currentGrid + '" class="grid-item"></div>';
+		grid.innerHTML += '<div id="' + currentGrid + '" class="grid-item" onkeydown="moveFocus(this.id)"></div>';
 		if ((i == 2 || i == 5) && (j == 2 || j == 5)) {
 			document.getElementById(currentGrid).style = "border-bottom-width: 2px; border-right-width: 2px;";
 		} else if (i == 2 || i == 5) {
@@ -98,15 +98,6 @@ function switchNumbers(x, y) {
 
 
 function shuffleSolution() {
-	// for (var i = 0; i < 3; i++) {
-	// 	switchRows(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
-	// 	switchCols(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
-	// }
-	// switchRowBlocks(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
-	// switchColBlocks(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
-	// switchNumbers(Math.ceil(Math.random() * 9), Math.ceil(Math.random() * 9));
-	// switchNumbers(Math.ceil(Math.random() * 9), Math.ceil(Math.random() * 9));
-
 	do {
 		switchRows(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
 		console.log("r");
@@ -143,7 +134,7 @@ for (var i = 0; i < 9; i++) {
 		var random = (Math.random() * 10);
 		if (random < 3) {
 			document.getElementById(currentGrid).innerHTML = solution[i][j];
-			document.getElementById(currentGrid).style.color = "#777";
+			document.getElementById(currentGrid).style.fontWeight = "bold";
 		} else {
 			puzzle[i][j] = 0;
 			var guess = document.createElement("INPUT");
@@ -159,7 +150,12 @@ for (var i = 0; i < 9; i++) {
 }
 
 // functions for buttons
+var correct = [];
+var correctLength = 0;
+
 function check() {
+	correct = []
+	correctLength = 0;
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
 			var currentGrid = "grid" + i + j;
@@ -168,12 +164,18 @@ function check() {
 				var g = parseInt(document.getElementById(currentGuess).value, 10);
 				if (g >= 1 && g <= 9) {
 					guesses[i][j] = g;
-					console.log(guesses[i][j]);
-					console.log(solution[i][j]);
 					if (guesses[i][j] != solution[i][j]) {
 						document.getElementById(currentGrid).style.backgroundColor = "rgba(200, 0, 0, 0.3)"
 					} else if (guesses[i][j] == solution[i][j]) {
 						document.getElementById(currentGrid).style.backgroundColor = "transparent";
+						correct.push(currentGrid);	
+						document.getElementById(correct[correctLength]).className += " animation";
+						transparent(correctLength);
+						correctLength++;
+
+						function transparent(i) {setTimeout(function() {
+							document.getElementById(correct[i]).classList.remove("animation")
+						}, 300);}		
 					}
 				} else if (document.getElementById(currentGuess).value != "") {
 					document.getElementById(currentGrid).style.backgroundColor = "#aaa"
@@ -183,16 +185,120 @@ function check() {
 	}
 }
 
+
 function clearGuesses() {
 	console.log("clear");
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
-			console.log("asdf");
 			var currentGuess = "guess" + i + j;
+			var currentGrid = "grid" + i + j;
 			if (puzzle[i][j] == 0) {
 				document.getElementById(currentGuess).value = "";
+				document.getElementById(currentGrid).style.backgroundColor = "transparent";
 			}
 		}
 	}
 }
 
+var showingSolution = false;
+
+function showSolution() {
+	console.log("solution");
+	if (showingSolution == false) {
+		for (var i = 0; i < 9; i++) {
+			for (var j = 0; j < 9; j++) {
+				var currentGuess = "guess" + i + j;
+				if (puzzle[i][j] == 0) {
+					document.getElementById(currentGuess).value = solution[i][j];
+				}
+			}
+		}
+		showingSolution = true;
+	} else {
+		clearGuesses();
+		showingSolution = false;
+	}
+}
+
+
+
+
+function moveFocus(id) {
+	var i = id.charAt(4);
+	var j = id.charAt(5);
+	var x = event.keyCode;
+
+	switch (x) {
+		case 37:
+			if (j == 0 && i != 0) {
+				j = 8;
+				i--;
+			} else if (j != 0) {
+				j--;
+			}
+			if (document.getElementById("guess" + i + j) != null) {
+				break;
+			} else {
+				var testj = j;
+				for (; testj >= 0; testj--) {
+					if (document.getElementById("guess" + i + testj) != null) {
+						j = testj;
+						break;
+					}
+				}
+			}
+			break;
+		case 38: 
+			if (i != 0) {
+				i--;
+			}
+			if (document.getElementById("guess" + i + j) != null) {
+				break;
+			} else {
+				var testi = i;
+				for (; testi >= 0; testi--) {
+					if (document.getElementById("guess" + testi + j) != null) {
+						i = testi;
+						break;
+					}
+				}
+			}
+			break;
+		case 39: 
+			if (j == 8 && i != 8) {
+				j = 0;
+				i++;
+			} else if (j != 8) {
+				j++;
+			}
+			if (document.getElementById("guess" + i + j) != null) {
+				break;
+			} else {
+				var testj = j;
+				for (; testj < 9; testj++) {
+					if (document.getElementById("guess" + i + testj) != null) {
+						j = testj;
+						break;
+					}
+				}
+			}
+			break;
+		case 40:
+			if (i != 8) {
+				i++;
+			}
+			if (document.getElementById("guess" + i + j) != null) {
+				break;
+			} else {
+				var testi = i;
+				for (; testi < 9; testi++) {
+					if (document.getElementById("guess" + testi + j) != null) {
+						i = testi;
+						break;
+					}
+				}
+			}
+			break;
+	}
+	document.getElementById("guess" + i + j).focus();
+}
