@@ -167,8 +167,8 @@ var checkGrid = [];
 var checkLength = 0;
 
 function check() {
-	correct = []
-	correctLength = 0;
+	checkGrid = []
+	checkLength = 0;
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
 			var currentGrid = "grid" + i + j;
@@ -178,7 +178,6 @@ function check() {
 				if (g >= 1 && g <= 9) {
 					guesses[i][j] = g;
 					if (guesses[i][j] != solution[i][j]) {
-				//		document.getElementById(currentGrid).style.backgroundColor = "rgba(200, 0, 0, 0.3)"
 						checkGrid.push(currentGrid);	
 						document.getElementById(checkGrid[checkLength]).className += " red";
 						transparentRed(checkLength);
@@ -190,7 +189,6 @@ function check() {
 						checkLength++;								
 					}
 				} else if (document.getElementById(currentGuess).value != "") {
-				//	document.getElementById(currentGrid).style.backgroundColor = "#aaa"
 					checkGrid.push(currentGrid);	
 					document.getElementById(c[checkLength]).className += " grey";
 					transparentGrey(checkLength);
@@ -203,15 +201,16 @@ function check() {
 
 function transparentGreen(i) {setTimeout(function() {
 	document.getElementById(checkGrid[i]).classList.remove("green");
-}, 300);}
+}, 500);}
 
 function transparentRed(i) {setTimeout(function() {
 	document.getElementById(checkGrid[i]).classList.remove("red");
-}, 300);}
+}, 500);}
 
 function transparentGrey(i) {setTimeout(function() {
 	document.getElementById(checkGrid[i]).classList.remove("grey");
-}, 300);}
+}, 500);}
+
 
 function clearGuesses() {
 	console.log("clear");
