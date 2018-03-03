@@ -156,12 +156,6 @@ shuffleSolution();
 
 
 
-
-// add numbers
-
-
-
-
 // functions for buttons
 var checkGrid = [];
 var checkLength = 0;
@@ -190,7 +184,7 @@ function check() {
 					}
 				} else if (document.getElementById(currentGuess).value != "") {
 					checkGrid.push(currentGrid);	
-					document.getElementById(c[checkLength]).className += " grey";
+					document.getElementById(checkGrid[checkLength]).className += " grey";
 					transparentGrey(checkLength);
 					checkLength++;
 				}
