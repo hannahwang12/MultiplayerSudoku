@@ -320,3 +320,103 @@ function moveFocus(id) {
 	}
 	document.getElementById("guess" + i + j).focus();
 }
+
+// check final solution
+
+function checkRow(row) {
+	
+	let numCount = new Array(10).fill(0);
+	for (let i = 0; i < 9; i++) {
+		let current;
+		let g;
+		if (puzzle[row][i] == 0) {
+			current = "guess" + row + i;
+			g = parseInt(document.getElementById(current).value, 10);
+		} else {
+		//	current = "grid" + row + i;
+			g = solution[row][i];
+		}
+	//	let g = parseInt(document.getElementById(current).value, 10);
+		 console.log('g: ' + g);
+		// console.log(numCount);
+		// console.log(numCount[g]);
+		numCount[g] += 1;
+	//	console.log(numCount[g]);
+	}
+	for (let i = 1; i <= 9; i++) {
+		if (numCount[i] != 1) {
+			console.log('numcount:' + numCount[i] + ', i: ' + i);
+			return false;
+		}
+	}
+	return true;
+}
+
+function checkColumn(column) {
+	let numCount = new Array(10).fill(0);
+	for (let i = 0; i < 9; i++) {
+		let current;
+		let g;
+		if (puzzle[i][column] == 0) {
+			current = "guess" + i + column;
+			g = parseInt(document.getElementById(current).value, 10);
+		} else {
+		//	current = "grid" + row + i;
+			g = solution[i][column];
+		}
+	//	let g = parseInt(document.getElementById(current).value, 10);
+		 console.log('g: ' + g);
+		// console.log(numCount);
+		// console.log(numCount[g]);
+		numCount[g] += 1;
+	//	console.log(numCount[g]);
+	}
+	for (let i = 1; i <= 9; i++) {
+		if (numCount[i] != 1) {
+			console.log('numcount:' + numCount[i] + ', i: ' + i);
+			return false;
+		}
+	}
+	return true;
+}
+
+function checkBox(box) {
+	const boxStartRow = Math.floor(box / 3) * 3;
+	const boxStartCol = ((box % 3) * 3);
+	let numCount = new Array(10).fill(0);
+	for (let i = 0; i < 3; i++) {
+		for (let j = 0; j < 3; j++) {
+			if (puzzle[(boxStartRow + i)][(boxStartCol + j)] == 0) {
+				current = "guess" + (boxStartRow + i) + (boxStartCol + j);
+				g = parseInt(document.getElementById(current).value, 10);
+			} else {
+			//	current = "grid" + row + i;
+				g = solution[(boxStartRow + i)][(boxStartCol + j)];
+			}
+			numCount[g] += 1;
+			console.log(numCount[g]);
+	
+		}
+	}
+	for (let i = 1; i <= 9; i++) {
+		if (numCount[i] != 1) {
+			console.log('numcount:' + numCount[i] + ', i: ' + i);
+			return false;
+		}
+	}
+	return true;
+}
+
+function checkFinalSolution() {
+	let check = true;
+	for (let i = 0; i < 9; i++) {
+		if (!checkRow(i) || !checkColumn(i) || !checkBox(i)) {
+			check = false;
+		}
+	}
+	if (check) {
+		console.log('yay');
+	} else {
+		console.log('wrong');
+	}
+}
