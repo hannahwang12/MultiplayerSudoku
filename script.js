@@ -152,10 +152,6 @@ function shuffleSolution() {
 
 shuffleSolution();
 
-
-
-
-
 // functions for buttons
 var checkGrid = [];
 var checkLength = 0;
@@ -177,7 +173,7 @@ function check() {
 						transparentRed(checkLength);
 						checkLength++;
 					} else if (guesses[i][j] == solution[i][j]) {
-						checkGrid.push(currentGrid);	
+						checkGrid.push(currentGrid);
 						document.getElementById(checkGrid[checkLength]).className += " green";
 						transparentGreen(checkLength);
 						checkLength++;								
@@ -322,9 +318,7 @@ function moveFocus(id) {
 }
 
 // check final solution
-
 function checkRow(row) {
-	
 	let numCount = new Array(10).fill(0);
 	for (let i = 0; i < 9; i++) {
 		let current;
@@ -333,15 +327,9 @@ function checkRow(row) {
 			current = "guess" + row + i;
 			g = parseInt(document.getElementById(current).value, 10);
 		} else {
-		//	current = "grid" + row + i;
 			g = solution[row][i];
 		}
-	//	let g = parseInt(document.getElementById(current).value, 10);
-		 console.log('g: ' + g);
-		// console.log(numCount);
-		// console.log(numCount[g]);
 		numCount[g] += 1;
-	//	console.log(numCount[g]);
 	}
 	for (let i = 1; i <= 9; i++) {
 		if (numCount[i] != 1) {
@@ -361,15 +349,9 @@ function checkColumn(column) {
 			current = "guess" + i + column;
 			g = parseInt(document.getElementById(current).value, 10);
 		} else {
-		//	current = "grid" + row + i;
 			g = solution[i][column];
 		}
-	//	let g = parseInt(document.getElementById(current).value, 10);
-		 console.log('g: ' + g);
-		// console.log(numCount);
-		// console.log(numCount[g]);
 		numCount[g] += 1;
-	//	console.log(numCount[g]);
 	}
 	for (let i = 1; i <= 9; i++) {
 		if (numCount[i] != 1) {
@@ -390,12 +372,9 @@ function checkBox(box) {
 				current = "guess" + (boxStartRow + i) + (boxStartCol + j);
 				g = parseInt(document.getElementById(current).value, 10);
 			} else {
-			//	current = "grid" + row + i;
 				g = solution[(boxStartRow + i)][(boxStartCol + j)];
 			}
 			numCount[g] += 1;
-			console.log(numCount[g]);
-	
 		}
 	}
 	for (let i = 1; i <= 9; i++) {
@@ -415,8 +394,14 @@ function checkFinalSolution() {
 		}
 	}
 	if (check) {
-		console.log('yay');
+		document.getElementById('grid').className += " green";
+		setTimeout(function() {
+			document.getElementById('grid').classList.remove("green");
+		}, 500);
 	} else {
-		console.log('wrong');
+		document.getElementById('grid').className += " red";
+		setTimeout(function() {
+			document.getElementById('grid').classList.remove("red");
+		}, 500);
 	}
 }

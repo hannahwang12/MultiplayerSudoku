@@ -5,7 +5,6 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-
 }
 
 h1 {
@@ -22,6 +21,7 @@ h1 {
 	grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
 	border: 2px solid black;
 	width: max-content;
+	margin-bottom: 30px;
 }
 
 .grid-item {
@@ -71,7 +71,7 @@ input {
 
 button {
 	display: inline;
-	margin-top: 50px;
+	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
 	background: transparent;
