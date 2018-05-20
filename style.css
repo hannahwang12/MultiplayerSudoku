@@ -72,8 +72,8 @@ input {
 button {
 	display: inline;
 	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
+	margin-left: 20px;
+	margin-right: 20px;
 	background: transparent;
 	border: none;
 	font-family: Montserrat;
