@@ -1,0 +1,131 @@
+body {
+	font-family: Montserrat;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+h1 {
+	letter-spacing: 25px;
+	margin-right: -25px;
+	font-size: 50px;
+	margin-top: -50px;
+	font-weight: lighter;
+}
+
+#playerCount {
+	position: fixed;
+	right: 30px;
+	top: 10px;
+}
+
+#grid {
+	display: grid;
+	grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+	grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+	border: 2px solid black;
+	width: max-content;
+	margin-bottom: 30px;
+}
+
+.grid-item {
+	border: 0.5px solid black;
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	font-size: 18px;
+}
+
+input {
+	background-color: transparent;
+	border: none;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	font-family: Montserrat;
+	font-size: 18px;
+}
+
+@keyframes green {
+	from {background-color: rgba(0, 200, 0, 0.3);}
+	to {background-color: transparent;}
+}
+
+.green {
+	animation: green 2s;
+}
+
+@keyframes red {
+	from {background-color: rgba(200, 0, 0, 0.3);}
+	to {background-color: transparent;}
+}
+
+.red {
+	animation: red 2s;
+}
+
+@keyframes grey {
+	from {background-color: rgba(0, 0, 0, 0.3);}
+	to {background-color: transparent;}
+}
+
+.grey {
+	animation: grey 2s;
+}
+
+button {
+	display: inline;
+	margin-top: 10px;
+	margin-left: 20px;
+	margin-right: 20px;
+	background: transparent;
+	border: none;
+	font-family: Montserrat;
+}
+
+button:hover {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+@media (max-width: 600px) {
+	#grid {
+		grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+		grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+	}
+
+	input {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+@media (max-width: 450px) {
+	h1 {
+		letter-spacing: 20px;
+		margin-right: -20px;
+		font-size: 40px;
+	}
+
+	#grid {
+		grid-template-columns: 35px 35px 35px 35px 35px 35px 35px 35px 35px;
+		grid-template-rows: 35px 35px 35px 35px 35px 35px 35px 35px 35px;
+	}
+
+	.grid-item {
+		font-size: 14px;
+	}
+
+	input {
+		width: 35px;
+		height: 35px;
+		font-size: 14px;
+	}
+
+	button {
+		margin-left: 3px;
+		margin-right: 3px;
+	}
+}

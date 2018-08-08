@@ -1,0 +1,23 @@
+{
+  "name": "sudoku",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hannahwang12/Sudoku.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hannahwang12/Sudoku/issues"
+  },
+  "homepage": "https://github.com/hannahwang12/Sudoku#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  }
+}
