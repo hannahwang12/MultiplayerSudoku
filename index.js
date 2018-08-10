@@ -1,12 +1,10 @@
-'use strict';
-
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
 
-app.use(express.static('src/client'));
+app.use(express.static('client'));
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/client/index.html');
@@ -28,9 +26,9 @@ io.on('connection', function (socket) {
   playerCount++;
   console.log(playerCount);
   io.sockets.emit('new player', playerCount);
-  //  socket.emit('game', { game: 'world' });
+//  socket.emit('game', { game: 'world' });
   socket.on('new game', function (data) {
-    //  io.sockets.emit('existing game', data);
+  //  io.sockets.emit('existing game', data);
     currentGame = data;
   });
   // socket.on('existing game', function (game) {
@@ -40,13 +38,13 @@ io.on('connection', function (socket) {
   // socket.on('my other event', function (data) {
   //   console.log(data);
   // });
-  socket.on('focus', function (id) {
+  socket.on('focus', function(id) {
     io.sockets.emit('focus', id);
   });
-  socket.on('blur', function (id) {
+  socket.on('blur', function(id) {
     io.sockets.emit('blur', id);
   });
-  socket.on('input', function (input) {
+  socket.on('input', function(input) {
     console.log(input.id);
     console.log(input.value);
     var i = input.id.charAt(5);
@@ -62,7 +60,6 @@ io.on('connection', function (socket) {
   });
 });
 
-server.listen(port, function () {
+server.listen(port, function() {
   console.log('listening on ' + port);
 });
-//# sourceMappingURL=index.js.map

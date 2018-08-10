@@ -1,4 +1,3 @@
-'use strict';
 
 var socket = io.connect('http://localhost:3000');
 socket.on('new player', function (numPlayers) {
@@ -6,7 +5,7 @@ socket.on('new player', function (numPlayers) {
 		console.log('start new game');
 		startGame();
 		console.log(grid);
-		socket.emit('new game', { grid: grid.outerHTML, solution: solution, puzzle: puzzle, guesses: guesses });
+		socket.emit('new game', {grid: grid.outerHTML, solution, puzzle, guesses});
 	} else {
 		socket.emit('existing game');
 		socket.on('existing game', function (game) {
@@ -19,12 +18,12 @@ socket.on('new player', function (numPlayers) {
 		});
 	}
 	$('#numPlayers').text(numPlayers);
-	//	socket.on()
+//	socket.on()
 });
 
 socket.on('player disconnected', function (numPlayers) {
 	$('#numPlayers').text(numPlayers);
-});
+})
 
 // socket.on('get current game', function () {
 // 	socket.emit('current game', {grid: grid.outerHTML, solution, puzzle, guesses});
@@ -33,15 +32,15 @@ socket.on('player disconnected', function (numPlayers) {
 var grid = document.getElementById("grid");
 var rowStart = 1;
 var n = 1;
-var solution = [[], [], [], [], [], [], [], [], []];
-var puzzle = [[], [], [], [], [], [], [], [], []];
-var guesses = [[], [], [], [], [], [], [], [], []];
+var solution = [[],[],[],[],[],[],[],[],[]];
+var puzzle = [[],[],[],[],[],[],[],[],[]];
+var guesses = [[],[],[],[],[],[],[],[],[]];
 
 function startGame() {
 	// generate grid
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
-			var currentGrid = "grid" + i + j;
+			var currentGrid	= "grid" + i + j;
 			grid.innerHTML += '<div id="' + currentGrid + '" class="grid-item" onkeydown="moveFocus(this.id)"></div>';
 			if ((i == 2 || i == 5) && (j == 2 || j == 5)) {
 				document.getElementById(currentGrid).style = "border-bottom-width: 2px; border-right-width: 2px;";
@@ -68,11 +67,12 @@ function startGame() {
 		}
 		rowStart += 3;
 		if (rowStart > 9) {
-			rowStart = rowStart % 9 + 1;
+			rowStart = (rowStart % 9) + 1;
 		}
 	}
 
 	shuffleSolution();
+
 }
 
 // document.getElementsByTagName('input').onchange() = function() {
@@ -83,7 +83,7 @@ function startGame() {
 function switchRows(a, b) {
 	if (a != b) {
 		for (var j = 0; j < 9; j++) {
-			var temp = solution[a][j];
+			var temp = solution[a][j]
 			solution[a][j] = solution[b][j];
 			solution[b][j] = temp;
 		}
@@ -104,22 +104,22 @@ function switchRowBlocks(a, b) {
 	if (a != b) {
 		for (var i = 0; i < 3; i++) {
 			for (var j = 0; j < 9; j++) {
-				var temp = solution[3 * a + i][j];
-				solution[3 * a + i][j] = solution[3 * b + i][j];
-				solution[3 * b + i][j] = temp;
+				var temp = solution[3*a+i][j]
+				solution[3*a+i][j] = solution[3*b+i][j];
+				solution[3*b+i][j] = temp;
 			}
 		}
 	}
 }
 
 function switchColBlocks(a, b) {
-	if (a != b) {
+	if (a != b ) {
 		for (var i = 0; i < 9; i++) {
 			for (var j = 0; j < 3; j++) {
-				var temp = solution[i][3 * a + j];
-				solution[i][3 * a + j] = solution[i][3 * b + j];
-				solution[i][3 * b + j] = temp;
-			}
+				var temp = solution[i][3*a+j];
+				solution[i][3*a+j] = solution[i][3*b+j];
+				solution[i][3*b+j] = temp;
+			}	
 		}
 	}
 }
@@ -139,8 +139,8 @@ function switchNumbers(x, y) {
 }
 
 function shuffleSolution() {
-	puzzle = [[], [], [], [], [], [], [], [], []];
-	guesses = [[], [], [], [], [], [], [], [], []];
+	puzzle = [[],[],[],[],[],[],[],[],[]];
+	guesses = [[],[],[],[],[],[],[],[],[]];
 	do {
 		switchRows(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
 		console.log("r");
@@ -170,7 +170,7 @@ function shuffleSolution() {
 			} else {
 				document.getElementById(currentGrid).innerHTML = "";
 			}
-			var random = Math.random() * 10;
+			var random = (Math.random() * 10);
 			if (random < 3) {
 				document.getElementById(currentGrid).innerHTML = solution[i][j];
 				document.getElementById(currentGrid).style.fontWeight = "bold";
@@ -178,56 +178,56 @@ function shuffleSolution() {
 				puzzle[i][j] = 0;
 				var guess = document.createElement("input");
 				guess.setAttribute("id", "guess" + i + j);
-				//	guess.setAttribute("type", "number");
+			//	guess.setAttribute("type", "number");
 				guess.setAttribute("maxlength", "1");
-				//	guess.setAttribute("onfocus", "this.value=''");
+			//	guess.setAttribute("onfocus", "this.value=''");
 				guess.setAttribute('onFocus', 'onFocusFunction(this.id)');
 				guess.setAttribute('onBlur', 'onBlurFunction(this.id)');
 				guess.setAttribute('onInput', "onInputFunction(this.id, this.value)");
 				document.getElementById(currentGrid).appendChild(guess);
-				//	guesses[i][j] = parseInt(guess, 10);
+			//	guesses[i][j] = parseInt(guess, 10);
 				console.log(guesses[i][j]);
 			}
 		}
 	}
 }
 
-onFocusFunction = function onFocusFunction(id) {
+onFocusFunction = function (id) {
 	socket.emit('focus', id);
-};
+}
 
 socket.on('focus', function (id) {
 	console.log('focus');
-	$('#' + id).css({ backgroundColor: 'rgba(0, 150, 200, 0.3)' });
-});
+	$(`#${id}`).css({backgroundColor: 'rgba(0, 150, 200, 0.3)'});
+})
 
-onBlurFunction = function onBlurFunction(id) {
+onBlurFunction = function (id) {
 	socket.emit('blur', id);
-};
+}
 
 socket.on('blur', function (id) {
 	console.log('focus');
-	$('#' + id).css({ backgroundColor: 'transparent' });
-});
+	$(`#${id}`).css({backgroundColor: 'transparent'});
+})
 
-onInputFunction = function onInputFunction(id, value) {
-	socket.emit('input', { id: id, value: value });
+onInputFunction = function (id, value) {
+	socket.emit('input', {id, value});
 	console.log('onchangefunction');
-};
+}
 
 socket.on('input', function (input) {
 	console.log(input);
-	$('#' + input.id).val(input.value);
-});
+	$(`#${input.id}`).val(input.value);
+})
 
 function fillInGuesses(guesses) {
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
 			if (guesses[i][j]) {
-				console.log(guesses[i][j]);
-				console.log($('#guess' + i + j));
-
-				$('#guess' + i + j).val('' + guesses[i][j]);
+				console.log(guesses[i][j])
+				console.log($(`#guess${i}${j}`));
+				
+				$(`#guess${i}${j}`).val(`${guesses[i][j]}`);
 			}
 		}
 	}
@@ -238,7 +238,7 @@ var checkGrid = [];
 var checkLength = 0;
 
 function check() {
-	checkGrid = [];
+	checkGrid = []
 	checkLength = 0;
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
@@ -249,7 +249,7 @@ function check() {
 				if (g >= 1 && g <= 9) {
 					guesses[i][j] = g;
 					if (guesses[i][j] != solution[i][j]) {
-						checkGrid.push(currentGrid);
+						checkGrid.push(currentGrid);	
 						document.getElementById(checkGrid[checkLength]).className += " red";
 						transparentRed(checkLength);
 						checkLength++;
@@ -257,10 +257,10 @@ function check() {
 						checkGrid.push(currentGrid);
 						document.getElementById(checkGrid[checkLength]).className += " green";
 						transparentGreen(checkLength);
-						checkLength++;
+						checkLength++;								
 					}
 				} else if (document.getElementById(currentGuess).value != "") {
-					checkGrid.push(currentGrid);
+					checkGrid.push(currentGrid);	
 					document.getElementById(checkGrid[checkLength]).className += " grey";
 					transparentGrey(checkLength);
 					checkLength++;
@@ -270,23 +270,18 @@ function check() {
 	}
 }
 
-function transparentGreen(i) {
-	setTimeout(function () {
-		document.getElementById(checkGrid[i]).classList.remove("green");
-	}, 500);
-}
+function transparentGreen(i) {setTimeout(function() {
+	document.getElementById(checkGrid[i]).classList.remove("green");
+}, 500);}
 
-function transparentRed(i) {
-	setTimeout(function () {
-		document.getElementById(checkGrid[i]).classList.remove("red");
-	}, 500);
-}
+function transparentRed(i) {setTimeout(function() {
+	document.getElementById(checkGrid[i]).classList.remove("red");
+}, 500);}
 
-function transparentGrey(i) {
-	setTimeout(function () {
-		document.getElementById(checkGrid[i]).classList.remove("grey");
-	}, 500);
-}
+function transparentGrey(i) {setTimeout(function() {
+	document.getElementById(checkGrid[i]).classList.remove("grey");
+}, 500);}
+
 
 function clearGuesses() {
 	console.log("clear");
@@ -322,6 +317,7 @@ function showSolution() {
 	}
 }
 
+
 function moveFocus(id) {
 	var i = id.charAt(4);
 	var j = id.charAt(5);
@@ -347,7 +343,7 @@ function moveFocus(id) {
 				}
 			}
 			break;
-		case 38:
+		case 38: 
 			if (i != 0) {
 				i--;
 			}
@@ -363,7 +359,7 @@ function moveFocus(id) {
 				}
 			}
 			break;
-		case 39:
+		case 39: 
 			if (j == 8 && i != 8) {
 				j = 0;
 				i++;
@@ -406,19 +402,19 @@ function moveFocus(id) {
 function checkRow(row) {
 	var numCount = new Array(10).fill(0);
 	for (var i = 0; i < 9; i++) {
-		var _current = void 0;
-		var _g = void 0;
+		var current;
+		var g;
 		if (puzzle[row][i] == 0) {
-			_current = "guess" + row + i;
-			_g = parseInt(document.getElementById(_current).value, 10);
+			current = "guess" + row + i;
+			g = parseInt(document.getElementById(current).value, 10);
 		} else {
-			_g = solution[row][i];
+			g = solution[row][i];
 		}
-		numCount[_g] += 1;
+		numCount[g] += 1;
 	}
-	for (var _i = 1; _i <= 9; _i++) {
-		if (numCount[_i] != 1) {
-			console.log('numcount:' + numCount[_i] + ', i: ' + _i);
+	for (var i = 1; i <= 9; i++) {
+		if (numCount[i] != 1) {
+			console.log('numcount:' + numCount[i] + ', i: ' + i);
 			return false;
 		}
 	}
@@ -428,19 +424,19 @@ function checkRow(row) {
 function checkColumn(column) {
 	var numCount = new Array(10).fill(0);
 	for (var i = 0; i < 9; i++) {
-		var _current2 = void 0;
-		var _g2 = void 0;
+		var current;
+		var g;
 		if (puzzle[i][column] == 0) {
-			_current2 = "guess" + i + column;
-			_g2 = parseInt(document.getElementById(_current2).value, 10);
+			current = "guess" + i + column;
+			g = parseInt(document.getElementById(current).value, 10);
 		} else {
-			_g2 = solution[i][column];
+			g = solution[i][column];
 		}
-		numCount[_g2] += 1;
+		numCount[g] += 1;
 	}
-	for (var _i2 = 1; _i2 <= 9; _i2++) {
-		if (numCount[_i2] != 1) {
-			console.log('numcount:' + numCount[_i2] + ', i: ' + _i2);
+	for (var i = 1; i <= 9; i++) {
+		if (numCount[i] != 1) {
+			console.log('numcount:' + numCount[i] + ', i: ' + i);
 			return false;
 		}
 	}
@@ -448,23 +444,23 @@ function checkColumn(column) {
 }
 
 function checkBox(box) {
-	var boxStartRow = Math.floor(box / 3) * 3;
-	var boxStartCol = box % 3 * 3;
+	const boxStartRow = Math.floor(box / 3) * 3;
+	const boxStartCol = ((box % 3) * 3);
 	var numCount = new Array(10).fill(0);
 	for (var i = 0; i < 3; i++) {
 		for (var j = 0; j < 3; j++) {
-			if (puzzle[boxStartRow + i][boxStartCol + j] == 0) {
+			if (puzzle[(boxStartRow + i)][(boxStartCol + j)] == 0) {
 				current = "guess" + (boxStartRow + i) + (boxStartCol + j);
 				g = parseInt(document.getElementById(current).value, 10);
 			} else {
-				g = solution[boxStartRow + i][boxStartCol + j];
+				g = solution[(boxStartRow + i)][(boxStartCol + j)];
 			}
 			numCount[g] += 1;
 		}
 	}
-	for (var _i3 = 1; _i3 <= 9; _i3++) {
-		if (numCount[_i3] != 1) {
-			console.log('numcount:' + numCount[_i3] + ', i: ' + _i3);
+	for (var i = 1; i <= 9; i++) {
+		if (numCount[i] != 1) {
+			console.log('numcount:' + numCount[i] + ', i: ' + i);
 			return false;
 		}
 	}
@@ -480,14 +476,13 @@ function checkFinalSolution() {
 	}
 	if (check) {
 		document.getElementById('grid').className += " green";
-		setTimeout(function () {
+		setTimeout(function() {
 			document.getElementById('grid').classList.remove("green");
 		}, 500);
 	} else {
 		document.getElementById('grid').className += " red";
-		setTimeout(function () {
+		setTimeout(function() {
 			document.getElementById('grid').classList.remove("red");
 		}, 500);
 	}
 }
-//# sourceMappingURL=script.js.map
