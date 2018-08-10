@@ -1,5 +1,5 @@
 
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('https://fierce-caverns-24669.herokuapp.com/');
 socket.on('new player', function (numPlayers) {
 	if (numPlayers == 1) {
 		console.log('start new game');
