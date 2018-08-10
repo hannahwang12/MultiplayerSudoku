@@ -1,5 +1,5 @@
 
-var socket = io.connect('https://fierce-caverns-24669.herokuapp.com/');
+var socket = io.connect('https://twodoku.herokuapp.com/');
 socket.on('new player', function (numPlayers) {
 	if (numPlayers == 1) {
 		console.log('start new game');
