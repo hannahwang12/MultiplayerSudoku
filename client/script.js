@@ -4,7 +4,6 @@ socket.on('new player', function (numPlayers) {
 	if (numPlayers == 1) {
 		console.log('start new game');
 		startGame();
-		console.log(grid);
 		socket.emit('new game', {grid: grid.outerHTML, solution, puzzle, guesses});
 	} else {
 		socket.emit('existing game');
@@ -143,23 +142,18 @@ function shuffleSolution() {
 	guesses = [[],[],[],[],[],[],[],[],[]];
 	do {
 		switchRows(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
-		console.log("r");
 	} while (Math.floor(Math.random() * 3) != 0);
 	do {
 		switchCols(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
-		console.log("c");
 	} while (Math.floor(Math.random() * 3) != 0);
 	do {
 		switchRowBlocks(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
-		console.log("rb");
 	} while (Math.floor(Math.random() * 3) != 0);
 	do {
 		switchColBlocks(Math.floor(Math.random() * 3), Math.floor(Math.random() * 3));
-		console.log("cb");
 	} while (Math.floor(Math.random() * 3) != 0);
 	do {
 		switchNumbers(Math.ceil(Math.random() * 9), Math.ceil(Math.random() * 9));
-		console.log("sn");
 	} while (Math.floor(Math.random() * 4) != 0);
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
@@ -186,7 +180,6 @@ function shuffleSolution() {
 				guess.setAttribute('onInput', "onInputFunction(this.id, this.value)");
 				document.getElementById(currentGrid).appendChild(guess);
 			//	guesses[i][j] = parseInt(guess, 10);
-				console.log(guesses[i][j]);
 			}
 		}
 	}
@@ -197,7 +190,6 @@ onFocusFunction = function (id) {
 }
 
 socket.on('focus', function (id) {
-	console.log('focus');
 	$(`#${id}`).css({backgroundColor: 'rgba(0, 150, 200, 0.3)'});
 })
 
@@ -206,17 +198,14 @@ onBlurFunction = function (id) {
 }
 
 socket.on('blur', function (id) {
-	console.log('focus');
 	$(`#${id}`).css({backgroundColor: 'transparent'});
 })
 
 onInputFunction = function (id, value) {
 	socket.emit('input', {id, value});
-	console.log('onchangefunction');
 }
 
 socket.on('input', function (input) {
-	console.log(input);
 	$(`#${input.id}`).val(input.value);
 })
 
@@ -224,9 +213,6 @@ function fillInGuesses(guesses) {
 	for (var i = 0; i < 9; i++) {
 		for (var j = 0; j < 9; j++) {
 			if (guesses[i][j]) {
-				console.log(guesses[i][j])
-				console.log($(`#guess${i}${j}`));
-				
 				$(`#guess${i}${j}`).val(`${guesses[i][j]}`);
 			}
 		}
@@ -414,7 +400,6 @@ function checkRow(row) {
 	}
 	for (var i = 1; i <= 9; i++) {
 		if (numCount[i] != 1) {
-			console.log('numcount:' + numCount[i] + ', i: ' + i);
 			return false;
 		}
 	}
@@ -436,7 +421,6 @@ function checkColumn(column) {
 	}
 	for (var i = 1; i <= 9; i++) {
 		if (numCount[i] != 1) {
-			console.log('numcount:' + numCount[i] + ', i: ' + i);
 			return false;
 		}
 	}
@@ -460,7 +444,6 @@ function checkBox(box) {
 	}
 	for (var i = 1; i <= 9; i++) {
 		if (numCount[i] != 1) {
-			console.log('numcount:' + numCount[i] + ', i: ' + i);
 			return false;
 		}
 	}
